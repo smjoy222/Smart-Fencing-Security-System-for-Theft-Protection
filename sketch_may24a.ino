@@ -1,12 +1,17 @@
-int ledPin = 13; 
+int ledPin = 13;   
+int buzzerPin = 8;  
 
 void setup() {
-  pinMode(ledPin, OUTPUT); 
+  pinMode(ledPin, OUTPUT);     
+  pinMode(buzzerPin, OUTPUT);
 }
 
 void loop() {
-  digitalWrite(ledPin, HIGH); 
-  delay(1000);              
-  digitalWrite(ledPin, LOW); 
-  delay(1000);               
+  digitalWrite(ledPin, HIGH);   
+  digitalWrite(buzzerPin, HIGH); 
+  delay(500);                 
+
+  digitalWrite(ledPin, LOW);    
+  digitalWrite(buzzerPin, LOW); 
+  delay(500);                  
 }
