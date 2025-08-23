@@ -114,6 +114,31 @@ char auth[] = "YourBlynkAuthToken";
 
 <hr>
 
+<h2>🤝 Contribution</h2>
+<ol>
+  <li>Fork this repository.</li>
+  <li>Create your feature branch: <code>git checkout -b feature/new-idea</code></li>
+  <li>Commit changes: <code>git commit -m "Added new feature"</code></li>
+  <li>Push to the branch: <code>git push origin feature/new-idea</code></li>
+  <li>Open a Pull Request.</li>
+</ol>
+
+<hr>
+
+## 📜 License
+
+![NOT OPEN SOURCE](https://img.shields.io/badge/license-NOT%20OPEN%20SOURCE-red)
+![All Rights Reserved](https://img.shields.io/badge/copyright-All%20Rights%20Reserved-blueviolet)
+![Year](https://img.shields.io/badge/year-2025-informational)
+
+> This project is **NOT open source**.  
+> **All rights reserved © 2025 Sazzad Mahmud Joy.**  
+> Usage of this code requires **prior written permission** from the author.
+
+**Contact:** <smjoy222@gmail.com>
+
+<hr>
+
 
 <p align="center">
   Made 💚 by Sazzad Mahmud Joy</strong>
