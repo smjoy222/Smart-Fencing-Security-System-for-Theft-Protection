@@ -13,6 +13,7 @@ char pass[] = "helloworld10";
 #define TOUCH_PIN1   T0
 #define TOUCH_PIN2   T3
 #define BUZZER_PIN   26
+#define BUZZER_PIN2  32 
 #define LED_PIN      25
 #define SERVO_PIN    27
 
@@ -44,6 +45,7 @@ BLYNK_WRITE(V0) {
   if (!systemEnabled) {
     digitalWrite(LED_PIN, LOW);
     digitalWrite(BUZZER_PIN, LOW);
+    digitalWrite(BUZZER_PIN2, LOW);
     servoTarget = 0;
     blinkState = false;
     alertSent1 = false;
@@ -64,14 +66,20 @@ BLYNK_WRITE(V5) {
 
 void setup() {
   Serial.begin(115200);
+
   pinMode(LED_PIN, OUTPUT);
   pinMode(BUZZER_PIN, OUTPUT);
+  pinMode(BUZZER_PIN2, OUTPUT);  
+
   digitalWrite(LED_PIN, LOW);
   digitalWrite(BUZZER_PIN, LOW);
+  digitalWrite(BUZZER_PIN2, LOW);
+
   myServo.attach(SERVO_PIN);
   myServo.write(0);
   servoCurrent = 0;
   servoTarget = 0;
+
   Blynk.begin(auth, ssid, pass);
 }
 
@@ -92,20 +100,24 @@ void moveServoSmooth() {
 void loop() {
   Blynk.run();
   timer.run();
+
   int touchValue1 = touchRead(TOUCH_PIN1);
   int touchValue2 = touchRead(TOUCH_PIN2);
   bool isTouched1 = touchValue1 < TOUCH_THRESHOLD;
   bool isTouched2 = touchValue2 < TOUCH_THRESHOLD;
   bool anyTouched = isTouched1 || isTouched2;
+
   if (!systemEnabled) {
     digitalWrite(LED_PIN, LOW);
     digitalWrite(BUZZER_PIN, LOW);
+    digitalWrite(BUZZER_PIN2, LOW);
     servoTarget = 0;
     moveServoSmooth();
     wasTouched1 = isTouched1;
     wasTouched2 = isTouched2;
     return;
   }
+
   if (touchControlEnabled) {
     if (isTouched1 && !wasTouched1) {
       servoTarget = 90;
@@ -132,20 +144,30 @@ void loop() {
   } else {
     servoTarget = 0;
   }
+
   moveServoSmooth();
+
   if (anyTouched) {
     unsigned long now = millis();
     if (now - lastBlink >= BLINK_MS) {
       blinkState = !blinkState;
       lastBlink = now;
     }
-    if (ledEnabled)    digitalWrite(LED_PIN,    blinkState ? HIGH : LOW);
-    if (buzzerEnabled) digitalWrite(BUZZER_PIN, blinkState ? HIGH : LOW);
+    if (ledEnabled) {
+      digitalWrite(LED_PIN, blinkState ? HIGH : LOW);
+    }
+    if (buzzerEnabled) {
+      digitalWrite(BUZZER_PIN,  blinkState ? HIGH : LOW);
+      digitalWrite(BUZZER_PIN2, blinkState ? HIGH : LOW); 
+    }
   } else {
     digitalWrite(LED_PIN, LOW);
     digitalWrite(BUZZER_PIN, LOW);
+    digitalWrite(BUZZER_PIN2, LOW);
     blinkState = false;
   }
+
   wasTouched1 = isTouched1;
   wasTouched2 = isTouched2;
 }
+
